@@ -1,1 +1,1 @@
-# BookBay
+The project is an "Ebay" for books. It is work I am not proud of. I did not use any bootstrapping and I used little to no javascript. Functionality is minimal and it does not look attractive. I did put a lot of work into the back end of the project. However I knew little of django and its workings so even the backend is sloppy. Since then, I've made a lot of improvement.
