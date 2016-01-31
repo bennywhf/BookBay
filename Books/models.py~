@@ -1,0 +1,47 @@
+from django.db import models
+
+
+
+class book(models.Model):
+	Title = models.CharField(max_length = 100) # Title of book.
+	Author = models.CharField(max_length = 100)# Author of book.
+	Publisher = models.CharField(max_length = 100)# Publisher of book.
+	Genre = models.CharField(max_length = 100)# Genre of book.
+	Abstract = models.TextField()# a short summary of book.
+	Quality = models.IntegerField() #scale from 0 - 10; 10 being best.
+	Poster = models.ForeignKey('user')#the user that posted the book.
+	#Images will come from the book_image class; since each book can have many images.
+
+
+class user(models.Model): #user related fields .
+	Type = models.CharField(max_length = 10) #types are SU, RU.
+	UserName = models.CharField(max_length = 100)#user name.
+	FirstName = models.CharField(max_length = 100)# first name.
+	LastName = models.CharField(max_length = 100)# last name.
+	Email = models.EmailField() # email address.
+	Picture = models.ImageField('User_Pic', upload_to = 'image/', max_length = 500, null = True) #profile picture: just one pic.
+	
+
+
+class visit_history(models.Model):
+	BookId = models.IntegerField() # Id of book visited.
+	DateTime = models.DateTimeField() #Date visited.
+	User = models.ForeignKey('user')# the user that posted the book.
+	
+
+class complaints(models.Model):
+	DateTime = models.DateTimeField() #Date Posted.
+	PostedBy = models.IntegerField()# Id of the user posting th complaint.
+	User = models.ForeignKey('user')# the user who the complaint is about.
+	ComplaintText = models.TextField() # any message involved in complaint.
+	
+
+class book_images(models.Model):
+	Image = models.ImageField('Book_Image', upload_to = 'image/', max_length = 500) # book image. one of many for each book.
+	Book = models.ForeignKey('book') # the book that this picuter belongs to.
+	
+
+class bid(models.Model):
+	PostDate = models.DateTimeField() # date and time of start bid.
+	Book = modelsForeginKey('book') # 
+	Price = models.DecimalField(decimal_places = 2)

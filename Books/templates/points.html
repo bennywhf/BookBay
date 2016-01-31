@@ -1,0 +1,10 @@
+{% include "master.html" %}
+
+<H1> Get Points </H1>
+
+<p> Low on Points? Buy more here. </p>
+
+<form action="/books/getpoints/" method="post" >{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</div>

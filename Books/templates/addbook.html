@@ -1,0 +1,17 @@
+{% include "master.html"%}
+{% if new %}
+<H1> Add Book </H1>
+{% else %}
+<H1> Edit Book </H1>
+{% endif%}
+
+{% if new %}
+<form action="/books/addbook/" method = "post" enctype="multipart/form-data" > {% csrf_token %}
+{% else%}
+<form action ="/books/editbook/{{ id }}/" method = "post" enctype="multipart/form-data"  > {% csrf_token %}
+{% endif %}
+{{ form.as_p}}
+<input type = "submit" value="Submit" />
+</form>
+
+</div>

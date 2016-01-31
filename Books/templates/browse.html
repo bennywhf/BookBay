@@ -1,0 +1,155 @@
+{% include "master.html" %}
+
+{% if search %}
+<h1><u>Search for keyword: {{keyword}}</u></h1>
+{%else%}
+<h1><u>Browse</u></h1>
+{%endif%}
+
+<br>
+<br>
+<br>
+
+{% if books %}
+<!------------------------------------------- Books ------------------------------>
+<h2><u>Books</u></h2>
+<table id = table border="3">
+<tr>
+<td><b>Image</b></td>
+<td><b>Title</b></td>
+<td><b>Rating</b></td>
+<td><b>Author</b></td>
+<td><b>Genre</b></td>
+<td><b>Abstract</b></td>
+<td><b>Quality</b></td>
+<td><b>Status</b></td>
+</tr>
+
+{%for i in books%}
+<tr>
+<td><a href = /books/viewbook/{{i.id}}> <img src= "{{MEDIA_URL}}/{{i.FrontImage}}" width = 45 height = 45 </td>
+<td><b><a href=/books/viewbook/{{i.id }}>{{i.Title}}</a> </b></td>
+<td>{%if i.NumofRates == 0 %}No Rating{%else%}{{i.Rating}}{%endif%}</td>
+<td> {{i.Author}} </td>
+<td> {{i.Genre}} </td>
+<td> {{i.Abstract}} </td>
+<td>
+{% if i.Quality == 0 %}
+Old
+{%endif%}
+
+{% if i.Quality == 1 %}
+Worn
+{%endif%}
+
+{% if i.Quality == 2 %}
+Good
+{%endif%}
+
+{% if i.Quality == 3 %}
+Like new
+{%endif%}
+
+{%if i.Quality == 4 %}
+New
+{% endif %}
+</td>
+<td>
+{%if i.Status == 'auction'%}
+<a href=/books/auctionbook/{{i.id}}>On Auction</a>
+{%endif%}
+
+{%if i.Status == 'sale'%}
+<a href=/books/salebook/{{i.id}}>For Sale</a>
+{%endif%}
+
+{%if i.Status == 'sold'%}
+Sold
+{%endif%}
+
+{%if i.Status == 'nosale' %}
+Not For Sale
+{%endif%}
+</td>
+
+
+{%endfor%}
+</table>
+{%endif%}
+<br>
+<!------------------------------------------- Users ------------------------------>
+{% if Users %}
+<h2><u>Users</u></h2>
+<table id = table border="3">
+<tr>
+<td><b>Image</b></td>
+<td><b>User Name</b></td>
+<td><b>Email</b></td>
+<td><b>Rating</b></td>
+</tr>
+{% for i in Users %}
+<tr> 
+<td><a href = /books/{{i.id}}> <img src= "{{MEDIA_URL}}/{{i.Picture}}" width = 45 height = 45  </td>
+<td><b><a href = /books/{{i.id}}>{{i.UserName}}</a></b></td>
+<td>{{i.Email}}</td>
+<td>{%if i.NumofRates == 0%} No Rating {%else%} {{i.Rating}} {%endif%}</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+<!------------------------------------------- Auctions ------------------------------>
+{% if auctions %}
+<h2><u>Auctions</u></h2>
+
+<table id = table border="3">
+<tr>
+<td><b>Book</b></td>
+<td><b>Image</b></td>
+<td><b>Open?</b></td>
+<td><b>Seller</b></td>
+<td><b>Last Bidder</b></td>
+<td><b>Last Bid</b></td>
+</tr>
+
+{% for i in auctions %}
+<tr>
+<td><a href = /books/auction/{{i.id}}> {{i.Book.Title}} </a></td>
+<td><a href = /books/auction/{{i.id}}> <img src= "{{MEDIA_URL}}/{{i.Book.FrontImage}}" width = 45 height = 45 </td>
+<td>{%if i.Open %} <a href = /books/auction/{{i.id}}/>Yes</a> {%else%} No {%endif%}</td>
+<td><a href =/books/{{i.Book.Owner.id}}>{{i.Book.Owner.UserName}}</a></td>
+<td>
+{% if i.LastBidder == None%}
+None
+{%else%}
+<a href =/books/{{i.LastBidder.id}}>{{i.LastBidder}}
+{%endif%}
+</td>
+<td>{{i.CurrentBidPrice}}</td>
+</tr>
+{%endfor%}
+
+</table>
+{% endif %}
+<!------------------------------------------- Auctions ------------------------------>
+{% if sales %}
+<h2><u>Sales</u></h2>
+
+<table id = table border="3">
+<tr>
+<td><b>Book</b></td>
+<td><b>Image</b></td>
+<td><b>Open?</b></td>
+<td><b>Seller</b></td>
+<td><b>Price</b></td>
+</tr>
+{% for i in sales%}
+<tr>
+<td><a href = /books/sale/{{i.id}}> {{i.Book.Title}} </td>
+<td><a href = /books/sale/{{i.id}}> <img src= "{{MEDIA_URL}}/{{i.Book.FrontImage}}" width = 45 height = 45 </td>
+<td>{%if i.Open %} <a href = /books/auction/{{i.id}}/>Yes</a> {%else%} No {%endif%}</td>
+<td><a href =/books/{{i.Book.Owner.id}}>{{i.Book.Owner.UserName}}</a></td>
+<td>{{i.BuyOutPrice}} </td>
+</tr>
+{%endfor%}
+{%endif%}
+</div>

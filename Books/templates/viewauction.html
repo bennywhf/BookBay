@@ -1,0 +1,95 @@
+{% include "master.html" %}
+
+{% if dorate %}
+<h2> Don't forget to rate User </h2>
+<form action = "/books/rate/{{auction.Book.Owner.id}}/" method = "post"> {% csrf_token%}
+{{ rate.as_p}}
+<input type = "submit" value = "Rate"/>
+</form>
+{% else %}
+
+
+
+{%if auction.Open %}
+<H1> Auction </H1>
+
+
+<b>Auctiond by:</b> <a href = /books/{{auction.Book.Owner.id}}/>{{auction.Book.Owner.UserName}} </a>
+<br>
+<b>Title:</b> <a href = /books/viewbook/{{book.id}}/>{{book.Title}} </a>
+<br>
+<b>Auction Ends:</b> {{auction.EndTime}}
+<br>
+<b> Minimum Bid Price:</b> <u>{{NB}}</u>
+<br>
+<b>Current Bid Price:</b> <u>{{auction.CurrentBidPrice}}</u> {% if auction.LastBidder == None %} (No Bids yet.) {% else %} By: <a href = /books/{{auction.LastBidder.id}}/ >{{auction.LastBidder.UserName}} </a> {% endif%}
+<br>
+<br>
+
+{% if auction.Book.Owner != user %}
+{% if LTmin%}
+<b> You must enter a number equal to or larger than {{NB}}</b>
+{%endif%}
+
+
+<form action = "/books/auction/{{auction.id}}/" method = "post"> {% csrf_token %}
+{{ form.as_p }}
+<input type = "submit" value = "Bid!" />
+</form>
+
+<form action = "/books/endsale/{{auction.id}}/" method = "post"> {% csrf_token %}
+<input type = "submit" value = "Buy Now! {{auction.BuyOutPrice}} points" />
+</form>
+
+<b> Your Wallet: </b> {{user.Wallet}}. <a href = /books/buytokens/> Buy More Points </a>
+
+{%else%} <!-- if current user owns the auction -->
+<form action = "/books/deleteauction/{{auction.id}}/" method = "post"> {% csrf_token %}
+<input type = "submit" value = "Delete!" />
+</form>
+
+{%endif%}
+{%else%} <!-- if not Open -->
+
+
+{% if auction.Book.Owner == user %}<!-- current user is the Seller -->
+
+{% if not auction.Payed %}
+    <b> User is waiting for book to be delivered. </b>
+{% endif%}
+<br>
+<h3> Rate User </h3>
+<form action = "/books/rate/{{auction.LastBidder.id}}/" method = "post"> {% csrf_token %}
+{{ rate.as_p }}
+<input type = "submit" value = "Rate!" />
+</form>
+
+{% else %} <!-- current user is the winner -->
+
+<b>You've committed to this purchase. </b>
+<br>
+<b>Book:</b> <a href = "/books/{{auction.Book.id}}/"> {{auction.Book.Title}} </a> <br><br>
+
+{%if not auction.Payed%}
+{% if Sale %}
+<form action = "/books/pay/1/{{auction.id}}/" method = "post"> {% csrf_token %}
+{% else %}
+<form action = "/books/pay/0/{{auction.id}}/" method = "post"> {% csrf_token %}
+{% endif %}
+<input type = "submit" value = "Pay" />
+</form>
+<p> Do no pay until Seller has sent book. </p>
+{% else %}
+<b><u>Payed!</u></b>
+{%endif%}
+
+<h3> Rate User </h3>
+<form action = "/books/rate/{{auction.Book.Owner.id}}/" method = "post"> {% csrf_token %}
+{{ rate.as_p }}
+<input type = "submit" value = "Rate!" />
+</form>
+
+{% endif%}
+{% endif%}
+{% endif%}
+</div> <!-- this must be added if inheriting from master.html -->

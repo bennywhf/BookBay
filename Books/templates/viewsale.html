@@ -1,0 +1,22 @@
+{% include "master.html" %}
+
+<H1> Sale </H1>
+
+<b>Seller:</b> <a href = /books/{{sale.Book.Owner.id}}/>{{sale.Book.Owner.UserName}} </a>
+<br>
+<b>Title:</b> <a href = /books/viewbook/{{book.id}}/>{{book.Title}} </a>
+<br>
+<b>Price:</b> {{sale.BuyOutPrice}}
+
+{% if user == sale.Book.Owner %}
+
+<form action = "/books/deletesale/{{sale.id}}/" method = "post"> {% csrf_token %}
+<input type = "submit" value = "Delete!" />
+</form>
+
+{%else%}
+<form action = "/books/endsale/{{sale.id}}/" method = "post"> {% csrf_token %}
+<input type = "submit" value = "Buy!" />
+</form>
+{%endif%}
+</div>

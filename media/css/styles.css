@@ -1,0 +1,159 @@
+html
+{
+font-family:sans-serif;
+}
+body 
+{
+font-family:sans-serif;
+/*background-color: #d0e4fe;*/
+background-color:white;
+background-image:url('../image/fruits.jpg');
+background-size:cover;
+}
+
+#Title
+{
+
+ font-family:sans-serif;
+ /*color: blue;*/
+ /*margin-left: auto;
+ margin-right: auto;*/
+ margin: 20px 20px 0px 20px;
+ /*border-bottom:3px dotted black;*/
+ border: 2px solid #ccc;
+ /*text-align:left;*/
+ /*background-color: white;
+ opacity: 0.6;*/
+ background-color: rgba(255,255,255,0.6);
+ box-shadow:5px 5px 5px gray;
+}
+#Title .home{
+text-align: left;
+}
+
+#Title .search{
+text-align: center;
+padding-bottom: 30px;
+}
+#Title .searchtext
+{
+width: 500px
+}
+
+img
+{
+ border: 2px solid #ccc;
+ box-shadow:5px 5px 5px gray;
+}
+
+#comment
+{
+font-size = 10;
+padding-top: 0;
+padding-bottom: 0;
+padding-right: 0;
+padding-left: 50px;
+}
+#signin
+{
+font-family:sans-serif;
+}
+
+#signbutton
+{
+ text-align:right
+}
+
+#table
+{
+background-color : #ffffff;
+font-family: sans-serif;
+font-size : 75%;
+}
+
+
+p.indexbody
+{
+text-align: center;
+font-family:sans-serif;
+padding-right:270px;
+padding-left:270px;
+/*border: 5px solid #ccc;*/
+}
+
+H2.viewuser
+{
+text-align: center;
+font-family:sans-serif;
+padding-right:270px;
+padding-left:270px;
+}
+
+
+p.goodbye
+{
+text-align: center;
+font-family:sans-serif;
+/*margin-right:500px;
+margin-left:500px;*/
+}
+
+/*form {
+    padding: 0px;
+}
+
+input {
+padding-bottom: 0px;
+margin-bottom: -19px;
+background-color : #ffffff;
+}
+*/
+#content
+{
+    height:100%;
+}
+
+#content .sidebar{
+    width: 180px; float: left;
+    /*height : 100%;*/
+    overflow: auto;
+    background-color: rgba(255,255,255,0.6);
+    border: 2px solid #ccc;
+    margin-left:20px;
+    box-shadow: 5px 5px 5px gray;
+    }
+
+#frontimage
+{
+display:inline-block;
+padding: 20px;
+}
+
+#content .sidebar .primary {
+padding: 0 20px 20px 30px;
+
+}
+
+#content .sidebar .secondary {
+padding: 0 30px 20px 20px;
+}
+
+#content #main {
+    /*margin 0 0 15px 200px;*/
+    padding-left 150px;
+    border: 2px solid #ccc;
+    margin-top:20px;
+    margin-left: 230px;
+    margin-right: 20px;
+    background-color: rgba(255,255,255,0.6);
+    box-shadow: 5px 5px 5px gray;
+    height: 100%
+    overflow: auto;
+}
+
+/*
+#id_rating
+{
+margin-top: -19px;
+padding-top : -20px;
+}*/

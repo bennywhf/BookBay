@@ -1,0 +1,84 @@
+{% include "master.html" %}
+<h1><u> {{book.Title}}</u></h1>
+<br>
+<div>
+<div id = "frontimage"><b>Front Cover</b><br><img src= "{{MEDIA_URL}}/{{book.FrontImage}}" width = 100 height = 100/> </b></div>
+<div id = "frontimage"><b>Back Image</b><br><img src= "{{MEDIA_URL}}/{{book.BackImage}}" width = 100 height = 100/></b></div>
+</div>
+<br>
+<br>
+<b><u>Author</u></b><br> {{book.Author}}
+<br>
+<b><u>Owner</u></b><br><A href = "/books/{{book.Owner.id}}"> {{book.Owner.UserName}} </A>
+<br>
+<b><u>Genre</u></b><br> {{book.Genre}}
+<br>
+<b><u>Publisher</u></b><br>{{book.Publisher}}
+<br>
+<b><u>Rating</u></b><br> {{book.Rating}} stars<br>
+{% if user != book.Owner%}
+<form action="/books/bookcomplaint/{{book.id}}/" method="get" >{% csrf_token %}
+<input type="submit" value="Complain!"/>
+{%endif%}
+<br>
+<b><u>Quality</u></b><br>
+{% if book.Quality == 0 %}
+Old
+{%endif%}
+
+{% if book.Quality == 1 %}
+Worn
+{%endif%}
+
+{% if book.Quality == 2 %}
+Good
+{%endif%}
+
+{% if book.Quality == 3 %}
+Like new
+{%endif%}
+
+{%if book.Quality == 4 %}
+New
+{% endif %}
+
+<br>
+<b><u>Abstract</u></b><br> <p> {{book.Abstract}} </p>
+<br>
+<b><u>For Sale?</u></b><br>
+{%if book.Status == 'auction'%}
+<a href=/books/auction/{{book.id}}>On Auction</a>
+{%endif%}
+
+{%if book.Status == 'sale'%}
+<a href=/books/sale/{{book.id}}>For Sale</a>
+{%endif%}
+
+{%if book.Status == 'sold'%}
+Sold
+{%endif%}
+
+{%if book.Status == 'nosale' %}
+Not For Sale
+{%endif%}
+<br>
+<h2 id = com><u> Comments </u> </h2>
+
+<ul>
+{% for i in comments%}
+<a href = "/books/{{i.PostedBy.id}}/">{{i.PostedBy.UserName}}</a> At {{i.PostDate}}<br>
+<p id = comment> {{i.CommentText}} </p>
+{% endfor %}
+</ul>
+<form action="/books/bookcomment/{{book.id}}/" method="post" >{% csrf_token %}
+{{textform.as_p}}
+<input type="submit" value="Post!" />
+</form>
+<br>
+
+<form action="/books/ratebook/{{book.id}}/" method="post" >{% csrf_token %}
+{{rate.as_p}}
+<input type="submit" value="Rate!" />
+</form>
+
+</div>

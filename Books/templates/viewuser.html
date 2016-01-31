@@ -1,0 +1,124 @@
+{% include "master.html" %}
+<h1>{{OU.UserName}}</h1>
+<img src= "{{MEDIA_URL}}/{{OU.Picture}}" width = 100 height = 100/>
+<br>
+{% if same%} <!-- adding edit user info link if user owns page -->
+<a href = '/books/edituser/'>Edit User Info</a><br>
+{%endif%}
+<b>Name:</b> {{OU.FirstName}} {{OU.LastName}}
+<br>
+<b>Email:</b> {{OU.Email}}
+<br>
+<b> Rating: </b> {{OU.Rating}} Stars {% if OU.NumofRates == 0 %} (No History Yet.) {%endif%}
+
+{% if not same %}
+<form action="/books/usercomplaint/{{OU.id}}/" method="get" >{% csrf_token %}
+<input type="submit" value="Complain!" />
+</form>
+{%endif%}
+
+<br>
+<br>
+<br>
+
+<H2 id = viewuser>
+    Books!
+</H2>
+
+<table id = table border="3">
+
+<tr>
+<td><b>Image</b></td>
+<td><b>Title</b></td>
+<td><b>Rating</b></td>
+<td><b>Author</b></td>
+<td><b>Genre</b></td>
+<td><b>Abstract</b></td>
+<td><b>Quality</b></td>
+<td><b>Status</b></td>
+{% if same%}
+
+<td><b>Sell</b></td>
+<td><b>Auction</b></td>
+<td><b>Edit</b></td>
+<td><b>Delete</b></td>
+{%endif%}
+</tr>
+{% for i in books %}
+<tr>
+<td><a href = /books/viewbook/{{i.id}}> <img src= "{{MEDIA_URL}}/{{i.FrontImage}}" width = 45 height = 45 </td>
+<td><b><a href=/books/viewbook/{{i.id }}>{{i.Title}}</a> </b></td>
+<td>{%if i.NumofRates == 0 %}No Rating{%else%}{{i.Rating}}{%endif%}</td> 
+<td> {{i.Author}} </td>
+<td> {{i.Genre}} </td>
+<td> {{i.Abstract}} </td>
+<td> 
+{% if i.Quality == 0 %}
+Old
+{%endif%}
+
+{% if i.Quality == 1 %}
+Worn
+{%endif%}
+
+{% if i.Quality == 2 %}
+Good
+{%endif%}
+
+{% if i.Quality == 3 %}
+Like new
+{%endif%}
+
+{%if i.Quality == 4 %}
+New
+{% endif %}
+ </td>
+<td> 
+{%if i.Status == 'auction'%}
+<a href=/books/auctionbook/{{i.id}}>On Auction</a>
+{%endif%}
+
+{%if i.Status == 'sale'%}
+<a href=/books/salebook/{{i.id}}>For Sale</a>
+{%endif%}
+
+{%if i.Status == 'sold'%}
+Sold
+{%endif%}
+
+{%if i.Status == 'nosale' %}
+Not For Sale
+{%endif%}
+
+</td>
+{%if same %}
+<td><a href=/books/salesetup/{{i.id}}>Sell</a></td>
+<td><a href=/books/auctionsetup/{{i.id}}>Auction</a></td>
+<td><a href=/books/editbook/{{i.id}}>Edit</a></td>
+<td><a href=/books/removebook/{{i.id}}>Delete</a></td>
+{%endif%}
+</tr>
+{%endfor%}
+</table> 
+{% if same%}
+<br>
+<form method="get" action="../addbook">
+    <button type="submit">AddBook!</button>
+</form>
+{% endif%}
+</b>
+<h2 id = ucom><u>Comments</u></h2>
+
+<ul>
+{% for i in comments%}
+<b><a href = "/books/{{i.PostedBy.id}}/">{{i.PostedBy.UserName}}</a> At {{i.PostDate}}</b><br>
+<p id = comment> {{i.CommentText}} </p>
+{% endfor %}
+</ul>
+
+<form action="/books/usercomment/{{OU.id}}/" method="post" >{% csrf_token %}
+{{textform.as_p}}
+<input type="submit" value="Submit" placeholder="Enter text" />
+</form>
+
+</div>

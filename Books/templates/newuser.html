@@ -1,0 +1,24 @@
+{% include "master.html" %}
+{% if new %}
+<H1> Sign Up Page </H1>
+{% else %}
+<H1> Edit User Info </H1>
+{% endif %}
+
+{% if new %}
+<form action="/books/adduser/" method="post" enctype="multipart/form-data" >{% csrf_token %}
+{% else %}
+<!-----------------password change buitton--------->
+<form action="/books/password/" method="get">{% csrf_token %}
+<input type="submit" value="Change Password" />
+</form>
+<br>
+<br>
+<!----------------------------------------------->
+<form action="/books/edituser/" method="post" enctype="multipart/form-data">{% csrf_token %}
+{% endif %}
+
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+</div>

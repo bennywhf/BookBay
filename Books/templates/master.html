@@ -1,0 +1,71 @@
+<link rel = "stylesheet" type = "text/css" href = "/books/media/css/styles.css" />
+
+<script>
+function validateForm()
+{
+var x=document.forms["myForm"]["keyword"].value;
+if (x==null || x=="")
+  {
+  alert("search bar must be filled out");
+  return false;
+  }
+}
+</script>
+
+
+<div id = "Title">
+<div class = "home">
+<H2>  <a href = /books/ style="text-decoration:none"> Book Bay </a> </H2>
+</div>
+<div class="search">
+
+<form name="myForm" action = '/books/search/' method = 'post' onsubmit="return validateForm()"> 
+ {% csrf_token %}
+ <!--<input class="searchtext" type="text" name="keyword" value = "Search Keyword...">-->
+<!--input class="searchtext"  style = "color:gray; font-style:italic" type = "text" name="keyword"
+value= "Enter Search Keyword..." onblur="if(this.value == '') { this.style.color='#0f0';this.value='Enter Search Keyword';
+this.style.fontStyle = 'italic'}"onfocus= "if(this.value == 'Enter Search Keyword') {this.style.color='black';
+this.value='';this.style.fontStyle='normal'}"-->
+<input class="searchtext" type="text" name="keyword" placeholder="Enter Search Keyword...">
+<font size='2'>or</font> <font size='2'><a href = "/books/browse/" style="text-decoration:none">Browse All</a></font>
+</form>
+
+
+</div>
+
+</div>
+
+<div id = "content">
+<div class="sidebar primary">
+    {% if user%}
+
+    {% if not user.Verified%}
+    <META http-equiv="refresh" content="0;URL= /books/notverified/">
+    {% endif %}
+
+    <b><a href = /books/{{user.id}}/ style="text-decoration:none"> {{user.UserName}} </a></b>
+    <br>
+    <b><a href = '/books/logout/' style="text-decoration:none">Sign Off</a></b>
+    <br>
+    <b>Wallet:</b> {{user.Wallet}} points.
+    <br>
+    <b><a href = '/books/getpoints/' style="text-decoration:none">Get Points!</a></b>
+    {%else%}
+    <b><a href = '/books/login/' style="text-decoration:none">Sign In</a></b>
+    {%endif%}
+    <br>
+    <b>Top Users</b>
+    <br>
+    <b>Top Books</b>
+    <br>
+    {% if user%}
+    <b>Your Bids</b>
+    <ul>
+    {% for i in bids%}
+    <li> <a href = "/books/auction/{{i.Auction.id}}/">{% if i.Auction.LastBidder == user%}{% if not i.Auction.Open%}Won!{%else%}Winning{%endif%}{%else%}Losing{%endif%}, {{i.Auction.auction.CurrentBidPrice}} points. {{i.Auction.Book.Title}}</a></li>
+    {% endfor%}
+    </ul>
+    {%endif%}
+</div>
+
+<div id = "main">

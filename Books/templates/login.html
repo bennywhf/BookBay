@@ -1,0 +1,14 @@
+{% include "master.html" %}
+{% if attempt %}
+<b> Email and/or Password entered incorrectly. Please try again. </b>
+{% endif %}
+
+<form action="/books/login/" method="post" >{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+<br>
+<form action="/books/adduser/">{% csrf_token%}
+<input type= "submit" value="Join BookBay!" />
+</form>
+</div>

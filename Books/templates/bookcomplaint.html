@@ -1,0 +1,9 @@
+{% include "master.html" %}
+
+<h1> Complaining about {{book.Owner.UserName}}'s book: {{book.Title}} </h1>
+
+<form action = "/books/bookcomplaint/{{book.id}}/" method = "post">{% csrf_token %}
+{{ form.as_p }}
+<input type ="submit" value= "Submit"/>
+</form>
+</div>
